@@ -45,6 +45,7 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(409, "User with this username already exists");
   }
 
+  console.log("handling files");
   //handling files
   const avatarLocalPath = req.files?.avatar[0]?.path;
   // const coverImageLocalPath = req.files?.coverImage[0]?.path;
@@ -54,15 +55,17 @@ const registerUser = asyncHandler(async (req, res) => {
     Array.isArray(req.files.coverImage) &&
     req.files.coverImage.length > 0
   ) {
+    console.log("getting cover image");
     coverImageLocalPath = req.files.coverImage[0].path;
   }
 
   if (!avatarLocalPath) {
     throw new ApiError(400, "Avatar field is required");
   }
-
+  console.log("uploading on cloudinary");
   // uploading on cloudinary
   const avatar = await uploadOnCloudinary(avatarLocalPath);
+  console.log("avatar uploaded");
   const coverImage = await uploadOnCloudinary(coverImageLocalPath);
 
   if (!avatar) {
@@ -227,14 +230,15 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 
   const user = await User.findById(req.user?._id);
 
-  const isPasswordCorrect = user.isPasswordCorrect(oldPassword);
+  const isPasswordCorrect = await user.isPasswordCorrect(oldPassword);
 
   if (!isPasswordCorrect) {
     throw new ApiError(400, "Invalid Current Password");
   }
-
+  console.log(user.password);
   user.password = newPassword;
   await user.save({ validateBeforeSave: false });
+  console.log(user.password);
   return res
     .status(200)
     .json(new ApiResponse(200, {}, "Password Updated successfully"));
@@ -243,10 +247,10 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 const getCurrentUser = asyncHandler(async (req, res) => {
   return res
     .status(200)
-    .json(200, req.user, "Current user fetched sucessfully");
+    .json(new ApiResponse(200, req.user, "Current user fetched sucessfully"));
 });
 
-const updatedAccountInfo = asyncHandler(async (req, res) => {
+const updateAccountInfo = asyncHandler(async (req, res) => {
   const { fullname, email } = req.body;
 
   if (!(email && fullname)) {
@@ -325,6 +329,77 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, user, "coverImage uploaded successfully"));
 });
 
+const getChannelProfile = asyncHandler(async (req, res) => {
+  const { username } = req.params;
+
+  if (!username?.trim()) {
+    throw new ApiError(400, "Channel Not found");
+  }
+
+  const channel = await User.aggregate([
+    {
+      $match: username?.toLowerCase(),
+    },
+    {
+      $lookup: {
+        from: "subscriptions",
+        localField: "_id",
+        foreignField: "channel",
+        as: "subscribers",
+      },
+    },
+    {
+      $lookup: {
+        from: "subscriptions",
+        localField: "_id",
+        foreignField: "subscribers",
+        as: "subscribedTo",
+      },
+    },
+    {
+      $addFields: {
+        subscribersCount: {
+          $size: "$subscribers",
+        },
+        channelSubscribedToCount: {
+          $size: "$subscribedTO",
+        },
+        isSubscribed: {
+          $cond: {
+            if: { $in: [req.user?._id, "$subscribers.subscribers"] },
+            then: true,
+            else: false
+          },
+        },
+      },
+    },
+    {
+      $project : {
+        fullname : 1,
+        username : 1,
+        email : 1,
+        coverImage : 1,
+        avatar : 1,
+        subscribersCount : 1,
+        channelSubscribedToCount : 1,
+        isSubscribed : 1
+      }
+    }
+  ]);
+  console.log(channel)
+
+  if (!channel?.length) {
+    throw new ApiError(400, "channel does not exists")
+  }
+
+  return res
+  .status(200)
+  .json(
+    new ApiResponse(200, channel[0], "Channel fetched Successfully")
+  )
+
+});
+
 export {
   registerUser,
   loginUser,
@@ -332,7 +407,8 @@ export {
   refreshAccessToken,
   changeCurrentPassword,
   getCurrentUser,
-  updatedAccountInfo,
+  updateAccountInfo,
   updateUserAvatar,
   updateUserCoverImage,
+  getChannelProfile
 };
