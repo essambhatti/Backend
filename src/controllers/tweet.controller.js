@@ -27,44 +27,50 @@ const createTweet = asyncHandler(async (req, res) => {
 
 const getUserTweets = asyncHandler(async (req, res) => {
   // TODO: get user tweets
-  //   const user = await User.findById(req.user);
+  const user = await User.findById(req.user);
 
-  //   const allTweets  =  await User.aggregate([
-  //     {
-  //       $match: {
-  //         _id: new mongoose.Types.ObjectId(req.user._id),
-  //       },
-  //       $lookup : {
-  //         from : "tweets",
-  //         localField : "_id",
-  //         foreignField : "owner",
-  //         as: "tweets"
-  //       },
-  //       {
-  //         $project : {
-  //             tweets : 1,
-  //             _id : 0
-  //         }
-  //       }
-  //     },
-  //   ]);
+  const allTweets = await User.aggregate([
+    {
+      $match: {
+        _id: new mongoose.Types.ObjectId(req.user._id),
+      },
+    },
+    {
+      $lookup: {
+        from: "tweets",
+        localField: "_id",
+        foreignField: "owner",
+        as: "tweets",
+      },
+    },
+    {
+      $project: {
+        tweets: 1,
+        _id: 0,
+      },
+    },
+  ]);
 
-  //   return res
-  //   .status(200)
-  //   .json(
-  //     new ApiResponse(200, allTweets, "All tweets of current user fetched successfully")
-  //   )
-
-  const tweets = await Tweet.find({ owner: req.user._id });
   return res
     .status(200)
     .json(
       new ApiResponse(
         200,
-        tweets,
+        allTweets,
         "All tweets of current user fetched successfully"
       )
     );
+
+  // const tweets = await Tweet.find({ owner: req.user._id });
+  // return res
+  //   .status(200)
+  //   .json(
+  //     new ApiResponse(
+  //       200,
+  //       tweets,
+  //       "All tweets of current user fetched successfully"
+  //     )
+  //   );
 });
 
 const updateTweet = asyncHandler(async (req, res) => {
