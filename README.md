@@ -72,28 +72,35 @@ You can test other endpoints like:
 
 ### 1\. Clone the Repository
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   git clone https://github.com/essambhatti/videostream.git  cd videostream   `
+`   git clone https://github.com/essambhatti/videostream.git  cd videostream   `
 
 ### 2\. Install Dependencies
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   npm install   `
+`   npm install   `
 
 ### 3\. Set Up Environment Variables
 
 Create a .env file in the root directory and add:
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   PORT=8000  MONGO_URI=your_mongodb_connection_string  CLOUDINARY_CLOUD_NAME=your_cloud_name  CLOUDINARY_API_KEY=your_key  CLOUDINARY_API_SECRET=your_secret  JWT_SECRET=your_jwt_secret   `
+`   PORT=8000  MONGO_URI=your_mongodb_connection_string  CLOUDINARY_CLOUD_NAME=your_cloud_name  CLOUDINARY_API_KEY=your_key  CLOUDINARY_API_SECRET=your_secret  JWT_SECRET=your_jwt_secret   `
 
 ### 4\. Start the Server
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   npm run dev   `
+`   npm run dev   `
 
 Your API will be available at:http://localhost:8000
 
 📂 Example API Routes
 ---------------------
 
-GET /api/videos — Fetch all videosPOST /api/videos/upload — Upload a new videoGET /api/tweets — Get tweetsPOST /api/tweets — Create a new tweetPOST /api/comments/:videoId — Comment on a videoGET /api/playlists — Fetch user playlistsPOST /api/playlists — Create a playlistPOST /api/likes/video/:videoId — Like a videoGET /api/dashboard/:channelId — Get channel analytic
+GET /api/videos — Fetch all videos
+POST /api/videos/upload — Upload a new video
+GET /api/tweets — Get tweets
+POST /api/tweets — Create a new tweet
+POST /api/comments/:videoId — Comment on a video
+GET /api/playlists — Fetch user playlists
+POST /api/playlists — Create a playlist
+POST /api/likes/video/:videoId — Like a video
+GET /api/dashboard/:channelId — Get channel analytic
 
 🙋 Author
 ---------
