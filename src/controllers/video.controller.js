@@ -61,6 +61,9 @@ const publishAVideo = asyncHandler(async (req, res) => {
   if (!title || !description) {
     throw new ApiError(400, "All field are required");
   }
+  console.log("Tracking files");
+  console.log("req.files:", req.files);
+  console.log("req.body:", req.body);
 
   const videoFileLocalPath = req.files?.videoFile[0]?.path;
   const thumbnailLocalPath = req.files?.thumbnail[0]?.path;
