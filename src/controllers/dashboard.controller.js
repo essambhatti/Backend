@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 import { Video } from "../models/video.model.js";
 import { Subscription } from "../models/subscription.model.js";
 import { Like } from "../models/like.model.js";
-import { ApiError } from "../utils/ApiError.js";
-import { ApiResponse } from "../utils/ApiResponse.js";
+import { ApiError } from "../utils/apiError.js";
+import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { User } from "../models/user.model.js";
 import { Tweet } from "../models/tweet.model.js";
@@ -33,7 +33,7 @@ const getChannelStats = asyncHandler(async (req, res) => {
   const tweetIds = tweets.map((t) => t._id);
   const commentIds = comments.map((c) => c._id);
 
-  
+
   const totalLikes = await Like.countDocuments({
     $or: [
       { video: { $in: videoIds } },
