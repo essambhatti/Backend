@@ -92,15 +92,15 @@ Your API will be available at:http://localhost:8000
 📂 Example API Routes
 ---------------------
 
-GET /api/videos — Fetch all videos
-POST /api/videos/upload — Upload a new video
-GET /api/tweets — Get tweets
-POST /api/tweets — Create a new tweet
-POST /api/comments/:videoId — Comment on a video
-GET /api/playlists — Fetch user playlists
-POST /api/playlists — Create a playlist
-POST /api/likes/video/:videoId — Like a video
-GET /api/dashboard/:channelId — Get channel analytic
+`GET /api/videos` — Fetch all videos  
+`POST /api/videos/upload` — Upload a new video  
+`GET /api/tweets` — Get tweets  
+`POST /api/tweets` — Create a new tweet  
+`POST /api/comments/:videoId` — Comment on a video  
+`GET /api/playlists` — Fetch user playlists  
+`POST /api/playlists` — Create a playlist  
+`POST /api/likes/video/:videoId` — Like a video  
+`GET /api/dashboard/:channelId` — Get channel analytics
 
 🙋 Author
 ---------
