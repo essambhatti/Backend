@@ -1,7 +1,7 @@
 📺 Castella
 ==================
 
-**VideoStream** is a backend-only REST API designed for a modern video sharing platform. It includes features such as uploading videos, liking and commenting, managing playlists, tweeting updates, and a channel dashboard for analytics.
+**Castella** is a backend-only REST API designed for a modern video sharing platform. It includes features such as uploading videos, liking and commenting, managing playlists, tweeting updates, and a channel dashboard for analytics.
 
 🛠️ Tech Stack
 --------------
